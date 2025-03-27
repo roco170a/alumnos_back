@@ -167,3 +167,9 @@ La estructura de la base de datos es la siguiente:
    - Consulta de resultados
 
 
+### Base de datos
+
+El aplicativo interactua con SQL Server a través de store procedures
+
+<img src="documentacion/ListaTSQL.jpg" alt="drawing" width="620"/>
+
