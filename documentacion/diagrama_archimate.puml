@@ -1,0 +1,195 @@
+@startuml Arquitectura_Sistema_Gestion_Academica
+!include <archimate/Archimate>
+
+title "Arquitectura del Sistema de Gestión Académica - ArchiMate"
+left to right direction
+
+' Definición de colores para las capas
+!define STRATEGY_COLOR #F5DEBC
+!define STRATEGY_COLOR_LIGHT #F5DEBC44
+!define BUSINESS_COLOR #FFFFCC
+!define BUSINESS_COLOR_LIGHT #FFFFCC44
+!define APPLICATION_COLOR #C2F0FF
+!define TECHNOLOGY_COLOR #C9FFC9
+!define TECHNOLOGY_COLOR_LIGHT #C9FFC955
+!define MOTIVATION_COLOR #FFCECE
+!define IMPLEMENTATION_COLOR #FFE0E0
+!define IMPLEMENTATION_COLOR_LIGHT #FFE0E044
+
+
+' Planificacion 
+rectangle "Estrategia" as MotivationGroup1 <<$archimate/principle>> STRATEGY_COLOR_LIGHT {
+    ' Capa de Estrategia (Strategy Layer)
+    Strategy_Capability(CAP_GestionAcademica, "SC01: Gestión Académica Integrada")
+    Strategy_Resource(RES_SistemaAcademico, "SR01: Sistema de Información Académica")
+
+    ' Capa de Motivación (Motivation Layer)
+    Motivation_Requirement(REQ_GestionDatos, "MR01: Gestión de datos académicos")
+    Motivation_Requirement(REQ_Visualizacion, "MR02: Visualización de datos")
+    Motivation_Requirement(REQ_Actualizacion, "MR03: Actualización de registros")
+    Motivation_Requirement(REQ_Reportes, "MR04: Generación de reportes académicos")
+}   
+
+' Funcional
+rectangle "Negocio" as BusinessGroup1 <<$archimate/business-meaning>> BUSINESS_COLOR_LIGHT {
+    ' Capa de Negocio (Business Layer)
+    Business_Actor(ACT_Alumno, "BA01: Alumno")
+    Business_Actor(ACT_Profesor, "BA02: Profesor")
+    Business_Process(PROC_GestionAlumnos, "BP01: Gestión de Alumnos")
+    Business_Process(PROC_GestionMaterias, "BP02: Gestión de Materias")
+    Business_Process(PROC_GestionExamenes, "BP03: Gestión de Exámenes")
+    Business_Process(PROC_ConsultaNotas, "BP04: Consulta de Notas")
+}
+
+' Capa de Aplicación (Application Layer)
+Grouping(FrontEnd, "Aplicación Web Angular") {
+    Application_Component(COMP_AppAngular, "AC01: Aplicación Angular")
+    Application_Component(COMP_DevExpress, "AC02: Componentes DevExpress")
+    
+    ' Páginas web para CRUD de Alumnos
+    Application_Interface(UI_AlumnosLista, "AI01: Lista de Alumnos") 
+    Application_Interface(UI_AlumnosDetalle, "AI02: Detalle de Alumno")
+    Application_Interface(UI_AlumnosForm, "AI03: Formulario de Alumno")
+    
+    ' Páginas web para CRUD de Materias
+    Application_Interface(UI_MateriasLista, "AI04: Lista de Materias")
+    Application_Interface(UI_MateriasDetalle, "AI05: Detalle de Materia")
+    Application_Interface(UI_MateriasForm, "AI06: Formulario de Materia")
+    
+    ' Páginas web para CRUD de Exámenes
+    Application_Interface(UI_ExamenesLista, "AI07: Lista de Exámenes")
+    Application_Interface(UI_ExamenesDetalle, "AI08: Detalle de Examen")
+    Application_Interface(UI_ExamenesForm, "AI09: Formulario de Examen")
+    
+    ' Página de reportes
+    Application_Interface(UI_Reportes, "AI10: Página de Reportes")
+}
+
+' Servicios
+Grouping(BackEnd, "Backend"){
+    Application_Component(COMP_Mapeador, "AC03: Mapeador de Entidades")
+    Application_Component(COMP_WebAPI, "AC04: Web API .NET Core")
+    Application_Interface(INT_WebUI, "AI11: Interfaz Web UI")
+
+    Application_Service(SERV_AlumnosAPI, "AS01: Servicio API Alumnos")
+    Application_Service(SERV_MateriasAPI, "AS02: Servicio API Materias")
+    Application_Service(SERV_ExamenesAPI, "AS03: Servicio API Exámenes")
+    Application_Service(SERV_ReportesAPI, "AS04: Servicio API Reportes")
+
+    Application_DataObject(OBJ_DBAlumnos, "ADO01: Entidad Alumno")
+    Application_DataObject(OBJ_DBMaterias, "ADO02: Entidad Materia")
+    Application_DataObject(OBJ_DBExamenes, "ADO03: Entidad Examen")
+}
+
+' Infraestructura
+rectangle "Tecnología" as TechnologyGroup1 <<$archimate/physical-facility>> TECHNOLOGY_COLOR_LIGHT {
+    ' Capa de Tecnología (Technology Layer)
+    Technology_Node(NODE_WebServer, "TN01: Servidor Web")
+    Technology_Node(NODE_DBServer, "TN02: Servidor de Base de Datos")
+    Technology_SystemSoftware(SYS_SQLServer, "TSS01: SQL Server")
+    Technology_SystemSoftware(SYS_NetCore, "TSS02: .NET Core")
+    Technology_SystemSoftware(SYS_Angular, "TSS03: Angular Framework")
+    
+}
+
+' Implementacion
+rectangle "Implementacion" as ImplementationGroup1 <<$archimate/product>> IMPLEMENTATION_COLOR_LIGHT {
+    ' Capa de Implementación y Migración (Implementation & Migration Layer)
+    Implementation_WorkPackage(WP_Sistema, "IWP01: Sistema Completo de Gestión Académica")
+    Implementation_Deliverable(DEL_BaseDatos, "ID01: Base de Datos Académica")
+    Implementation_Deliverable(DEL_APIRest, "ID02: API REST")
+    Implementation_Deliverable(DEL_WebApp, "ID03: Aplicación Web")
+}
+
+' Relaciones entre capas de Estrategia y Motivación
+Rel_Realization_Up(REQ_GestionDatos, CAP_GestionAcademica)
+Rel_Realization_Up(REQ_Visualizacion, CAP_GestionAcademica)
+Rel_Realization_Up(REQ_Actualizacion, CAP_GestionAcademica)
+Rel_Realization_Up(REQ_Reportes, CAP_GestionAcademica)
+Rel_Association_Up(CAP_GestionAcademica, RES_SistemaAcademico)
+
+' Relaciones entre capas de Negocio y Motivación
+Rel_Realization_Up(PROC_GestionAlumnos, REQ_GestionDatos)
+Rel_Realization_Up(PROC_GestionMaterias, REQ_GestionDatos)
+Rel_Realization_Up(PROC_GestionExamenes, REQ_GestionDatos)
+Rel_Realization_Up(PROC_ConsultaNotas, REQ_Visualizacion)
+
+' Relaciones entre actores y procesos
+Rel_Assignment(ACT_Alumno, PROC_ConsultaNotas)
+Rel_Association_Up(ACT_Profesor, PROC_GestionExamenes)
+Rel_Association_Up(ACT_Profesor, PROC_GestionMaterias)
+
+' Relaciones entre capas de Aplicación y Negocio
+Rel_Serving_Up(SERV_AlumnosAPI, PROC_GestionAlumnos)
+Rel_Serving_Up(SERV_MateriasAPI, PROC_GestionMaterias)
+Rel_Serving_Up(SERV_ExamenesAPI, PROC_GestionExamenes)
+Rel_Serving_Up(SERV_ReportesAPI, PROC_ConsultaNotas)
+Rel_Assignment_Up(COMP_WebAPI, SERV_AlumnosAPI)
+Rel_Assignment_Up(COMP_WebAPI, SERV_MateriasAPI)
+Rel_Assignment_Up(COMP_WebAPI, SERV_ExamenesAPI)
+Rel_Assignment_Up(COMP_WebAPI, SERV_ReportesAPI)
+Rel_Composition_Up(COMP_WebAPI, COMP_Mapeador)
+Rel_Assignment_Up(COMP_AppAngular, INT_WebUI)
+Rel_Composition(COMP_AppAngular, COMP_DevExpress)
+
+' Relaciones de las páginas web con la app de Angular
+Rel_Composition(COMP_AppAngular, UI_AlumnosLista)
+Rel_Composition(COMP_AppAngular, UI_AlumnosDetalle)
+Rel_Composition(COMP_AppAngular, UI_AlumnosForm)
+Rel_Composition(COMP_AppAngular, UI_MateriasLista)
+Rel_Composition(COMP_AppAngular, UI_MateriasDetalle)
+Rel_Composition(COMP_AppAngular, UI_MateriasForm)
+Rel_Composition(COMP_AppAngular, UI_ExamenesLista)
+Rel_Composition(COMP_AppAngular, UI_ExamenesDetalle)
+Rel_Composition(COMP_AppAngular, UI_ExamenesForm)
+Rel_Composition(COMP_AppAngular, UI_Reportes)
+
+' Relaciones de las páginas con los servicios de API
+Rel_Association(UI_AlumnosLista, SERV_AlumnosAPI)
+Rel_Association(UI_AlumnosDetalle, SERV_AlumnosAPI)
+Rel_Association(UI_AlumnosForm, SERV_AlumnosAPI)
+Rel_Association(UI_MateriasLista, SERV_MateriasAPI)
+Rel_Association(UI_MateriasDetalle, SERV_MateriasAPI)
+Rel_Association(UI_MateriasForm, SERV_MateriasAPI)
+Rel_Association(UI_ExamenesLista, SERV_ExamenesAPI)
+Rel_Association(UI_ExamenesDetalle, SERV_ExamenesAPI)
+Rel_Association(UI_ExamenesForm, SERV_ExamenesAPI)
+Rel_Association(UI_Reportes, SERV_ReportesAPI)
+
+' Relaciones entre capas de Tecnología y Aplicación
+Rel_Realization(SYS_NetCore, COMP_WebAPI)
+Rel_Realization(SYS_Angular, COMP_AppAngular)
+Rel_Realization(SYS_SQLServer, OBJ_DBAlumnos)
+Rel_Realization(SYS_SQLServer, OBJ_DBMaterias)
+Rel_Realization(SYS_SQLServer, OBJ_DBExamenes)
+Rel_Access(COMP_WebAPI, OBJ_DBAlumnos)
+Rel_Access(COMP_WebAPI, OBJ_DBMaterias)
+Rel_Access(COMP_WebAPI, OBJ_DBExamenes)
+Rel_Association_Up(INT_WebUI, SERV_AlumnosAPI)
+Rel_Association_Up(INT_WebUI, SERV_MateriasAPI)
+Rel_Association_Up(INT_WebUI, SERV_ExamenesAPI)
+Rel_Association_Up(INT_WebUI, SERV_ReportesAPI)
+Rel_Assignment(NODE_WebServer, SYS_NetCore)
+Rel_Assignment(NODE_WebServer, SYS_Angular)
+Rel_Assignment(NODE_DBServer, SYS_SQLServer)
+
+' Relaciones con la capa de Implementación
+Rel_Composition(WP_Sistema, DEL_BaseDatos)
+Rel_Composition(WP_Sistema, DEL_APIRest)
+Rel_Composition(WP_Sistema, DEL_WebApp)
+Rel_Realization(DEL_BaseDatos, SYS_SQLServer)
+Rel_Realization(DEL_APIRest, COMP_WebAPI)
+Rel_Realization(DEL_WebApp, COMP_AppAngular)
+
+legend right
+  Leyenda:
+  <b>Capas ArchiMate:</b>
+  <back:STRATEGY_COLOR>   </back> Estrategia (SC: Capability, SR: Resource)
+  <back:MOTIVATION_COLOR>   </back> Motivación (MR: Requirement)
+  <back:BUSINESS_COLOR>   </back> Negocio (BA: Actor, BP: Process)
+  <back:APPLICATION_COLOR>   </back> Aplicación (AC: Component, AS: Service, AI: Interface, ADO: DataObject)
+  <back:TECHNOLOGY_COLOR>   </back> Tecnología (TN: Node, TSS: SystemSoftware)
+  <back:IMPLEMENTATION_COLOR>   </back> Implementación (IWP: WorkPackage, ID: Deliverable)
+endlegend
+
+@enduml 

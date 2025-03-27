@@ -1,0 +1,194 @@
+@startuml DiagramaER_SistemaGestionAcademica
+' Configuración del aspecto
+!define ENTITY_BG_COLOR #F5F5F5
+!define FK_COLOR #B0B0B0
+!define PK_COLOR #E0E0E0
+!define IDENTITY_COLOR #E8F4FF
+!define IDENTITY_COLOR_LIGHT #E8F4FF44
+
+' Evitar problemas con las patas de cuervo en ángulo
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam roundCorner 5
+skinparam classFontStyle bold
+
+' Personalización de entidades
+skinparam class {
+    BackgroundColor ENTITY_BG_COLOR
+    BorderColor black
+    ArrowColor black
+}
+
+' Definición de entidades
+entity "Alumno" as alumno {
+    *id : number <<PK>> <<generated>>
+    --
+    *nombre : text
+    *apellido_paterno : text
+    *apellido_materno : text
+    *email : text
+    telefono : text
+    *fecha_nacimiento : date
+    direccion : text
+    *activo : boolean
+    *user_id : string <<FK>>
+}
+
+entity "Materia" as materia {
+    *id : number <<PK>> <<generated>>
+    --
+    *nombre : text
+    *codigo : text
+    *profesor : text
+    descripcion : text
+    *creditos : number
+    *activa : boolean
+}
+
+entity "Inscripcion" as inscripcion {
+    *id : number <<PK>> <<generated>>
+    --
+    *alumno_id : number <<FK>>
+    *materia_id : number <<FK>>
+    *fecha_inscripcion : date
+    *periodo_academico : text
+    estado : text
+    nota_final : decimal
+}
+
+entity "ProgramacionExamen" as prog_examen {
+    *id : number <<PK>> <<generated>>
+    --
+    *materia_id : number <<FK>>
+    *examen_id : number <<FK>>
+    *fecha_programada : date
+    *duracion_minutos : number
+    *aula : text
+    instrucciones : text
+    material_requerido : text
+    *estado : text
+}
+
+entity "Examen" as examen {
+    *id : number <<PK>> <<generated>>
+    --
+    *programacion_id : number <<FK>>
+    *tipo_examen_id : number <<FK>>
+    *fecha_realizacion : date
+    observaciones : text
+    estado : text
+}
+
+entity "AlumnoExamen" as alumno_examen {
+    *id : number <<PK>> <<generated>>
+    --
+    *alumno_id : number <<FK>>
+    *examen_id : number <<FK>>
+    *inscripcion_id : number <<FK>>
+    *nota : decimal
+    comentarios_alumno : text
+    comentarios_profesor : text
+    *fecha_presentacion : date
+    *estado : text
+}
+
+entity "TipoExamen" as tipo_examen {
+    *id : number <<PK>> <<generated>>
+    --
+    *nombre : text
+    *descripcion : text
+    *ponderacion : decimal
+}
+
+' Entidades de ASP.NET Identity
+package "Gestión de Usuarios" as Identity IDENTITY_COLOR_LIGHT {
+    entity "AspNetUsers" as users {
+        *Id : string <<PK>>
+        --
+        *UserName : string
+        NormalizedUserName : string
+        *Email : string
+        *EmailConfirmed : boolean
+        *PasswordHash : string
+        PhoneNumber : string
+        *LockoutEnabled : boolean
+    }
+
+    entity "AspNetRoles" as roles {
+        *Id : string <<PK>>
+        --
+        *Name : string
+        NormalizedName : string
+    }
+
+    entity "AspNetUserRoles" as user_roles {
+        *UserId : string <<PK>> <<FK>>
+        *RoleId : string <<PK>> <<FK>>
+    }
+    note "Sistema simplificado de gestión de usuarios\ncon roles para control de acceso" as N6
+    users .u. N6
+}
+hide Identity
+
+' Definición de relaciones
+' Un alumno puede inscribirse en muchas materias (a través de Inscripcion)
+alumno ||--o{ inscripcion
+inscripcion }o--|| materia
+
+' Una materia puede tener muchas programaciones de exámenes
+materia ||--o{ prog_examen
+
+' Una programación puede tener muchos exámenes realizados
+prog_examen ||--o{ examen
+
+' Un alumno puede realizar muchos exámenes (a través de AlumnoExamen)
+alumno ||--o{ alumno_examen
+alumno_examen }o--|| examen
+
+' La inscripción puede tener varios AlumnoExamen
+inscripcion ||--o{ alumno_examen
+
+' Un tipo de examen puede estar asociado a muchos exámenes
+tipo_examen ||-l-o{ examen
+
+' Relaciones ASP.NET Identity
+users ||--o{ user_roles
+roles ||-l-o{ user_roles
+
+' Un usuario puede tener un alumno asociado
+users ||-up-o| alumno
+
+' Texto explicativo
+note "La entidad Inscripcion representa la relación\nmuchos a muchos entre Alumno y Materia" as N1
+inscripcion .. N1
+
+note "La entidad ProgramacionExamen establece\ncuándo y dónde se realizará un examen\npara una materia específica" as N2
+prog_examen .. N2
+
+note "Un examen representa la evaluación\ncreada para una programación específica" as N3
+examen .. N3
+
+note "AlumnoExamen registra la participación\nde un alumno en un examen específico\ny su calificación obtenida" as N4
+alumno_examen .. N4
+
+note "Un tipo de examen define la categoría\ny ponderación de la evaluación" as N5
+tipo_examen .. N5
+
+
+caption "Diagrama Entidad-Relación del Sistema de Gestión Académica"
+title "Modelo de Datos - Sistema de Gestión Académica"
+
+legend right
+  <b>Leyenda:</b>
+  PK = Primary Key (Clave Primaria)
+  FK = Foreign Key (Clave Foránea)
+  * = Atributo obligatorio
+  ||--o{ = Uno a muchos
+  }o--|| = Muchos a uno
+  ||--|| = Uno a uno
+endlegend
+
+@enduml 
