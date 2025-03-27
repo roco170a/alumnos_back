@@ -98,7 +98,7 @@ La estructura de la base de datos es la siguiente:
 
 ## Frontend
 
-<img src="documentacion/pantalla1.jpg" alt="drawing" width="620"/>
+<img src="documentacion/Pantalla1.jpg" alt="drawing" width="620"/>
 
 ### Tecnologías Utilizadas
 
@@ -121,7 +121,7 @@ La estructura de la base de datos es la siguiente:
 
 1. **Alumnos**
 
-<img src="documentacion/pantallaA1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaA4.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaA3.jpg" alt="drawing" width="320"/>
+<img src="documentacion/PantallaA1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaA4.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaA3.jpg" alt="drawing" width="320"/>
 
    - Lista de alumnos
    - Detalles de alumno
@@ -129,7 +129,7 @@ La estructura de la base de datos es la siguiente:
 
 2. **Materias**
 
-<img src="documentacion/pantallaB1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaB2.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaB3.jpg" alt="drawing" width="320"/>
+<img src="documentacion/PantallaB1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaB2.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaB3.jpg" alt="drawing" width="320"/>
 
    - Lista de materias
    - Detalles de materia
@@ -137,7 +137,7 @@ La estructura de la base de datos es la siguiente:
 
 3. **Exámenes**
 
-<img src="documentacion/pantallaC1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaC2.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaC3.jpg" alt="drawing" width="320"/>
+<img src="documentacion/PantallaC1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaC2.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaC3.jpg" alt="drawing" width="320"/>
 
    - Lista de exámenes
    - Detalles de examen
@@ -145,7 +145,7 @@ La estructura de la base de datos es la siguiente:
 
 4. **Programaciones de Examen**
 
-<img src="documentacion/pantallaD1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaD2.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaD3.jpg" alt="drawing" width="320"/>
+<img src="documentacion/PantallaD1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaD2.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaD3.jpg" alt="drawing" width="320"/>
 
    - Lista de programaciones
    - Detalles de programación
@@ -153,14 +153,14 @@ La estructura de la base de datos es la siguiente:
 
 5. **Inscripciones**
 
-<img src="documentacion/pantallaE1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaE2.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaE3.jpg" alt="drawing" width="320"/>
+<img src="documentacion/PantallaE1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaE2.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaE3.jpg" alt="drawing" width="320"/>
 
    - Gestión de inscripciones de alumnos a materias
    - Visualización de inscripciones por alumno/materia
 
 6. **Alumno-Exámenes**
 
-<img src="documentacion/pantallaF1.jpg" alt="drawing" width="320"/> <img src="documentacion/pantallaF2.jpg" alt="drawing" width="320"/> 
+<img src="documentacion/PantallaF1.jpg" alt="drawing" width="320"/> <img src="documentacion/PantallaF2.jpg" alt="drawing" width="320"/> 
 
    - Registro de exámenes realizados por alumnos
    - Calificación de exámenes
